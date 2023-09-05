@@ -21,7 +21,23 @@ const dataAttuale = new Date();
 document.querySelector("div").innerHTML = dataAttuale.getHours();
 let oreAttuali = dataAttuale.getHours()
 console.log(oreAttuali);
-let minutiAttuali = dataAttuale.getMinutes()
+let minutiAttuali = dataAttuale.getMinutes();
+let oreGiornata = 24
+
+function calcoloMinutiMs(minuti) {
+    const risultatoInMs = minuti * 60000
+    return risultatoInMs;
+}
+minutiAttuali = calcoloMinutiMs(minutiAttuali)
 console.log(minutiAttuali);
-minutiAttuali = minutiAttuali * 60000
-console.log(minutiAttuali);
+
+function converterOreMinuti (ore) {
+    const oreInMinuti = ore * 60
+    return oreInMinuti
+}
+
+let OreTrasformateInMinuti = converterOreMinuti(oreAttuali)
+console.log(OreTrasformateInMinuti);
+
+oreAttuali = calcoloMinutiMs(OreTrasformateInMinuti)
+console.log(oreAttuali);
