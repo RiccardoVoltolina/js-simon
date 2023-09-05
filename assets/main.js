@@ -15,4 +15,13 @@ Esistono dei metodi per trasformare una data in millisecondi?
 
 // creare una variabile che indica l' orario e il minuto attuale const d = new Date();
 //trovare il tempo che manca da adesso alla lezione in millisecondi
-//
+//const d = new Date("2023-09-05"); in questo modo ottengo i millisecondi che mancano a domani
+
+const dataAttuale = new Date();
+document.querySelector("div").innerHTML = dataAttuale.getHours();
+let oreAttuali = dataAttuale.getHours()
+console.log(oreAttuali);
+let minutiAttuali = dataAttuale.getMinutes()
+console.log(minutiAttuali);
+minutiAttuali = minutiAttuali * 60000
+console.log(minutiAttuali);
