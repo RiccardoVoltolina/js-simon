@@ -18,17 +18,15 @@ Esistono dei metodi per trasformare una data in millisecondi?
 //const d = new Date("2023-09-05"); in questo modo ottengo i millisecondi che mancano a domani
 
 const dataAttuale = new Date();
-document.querySelector("div").innerHTML = dataAttuale.getHours();
 let oreAttuali = dataAttuale.getHours()
 console.log(oreAttuali);
 let minutiAttuali = dataAttuale.getMinutes();
-let oreGiornata = 24
-
+let oreGiornata = converterOreMinuti(24)
 function calcoloMinutiMs(minuti) {
     const risultatoInMs = minuti * 60000
     return risultatoInMs;
 }
-minutiAttuali = calcoloMinutiMs(minutiAttuali)
+minutiAttuali = calcoloMinutiMs(minutiAttuali) // minuti in ms
 console.log(minutiAttuali);
 
 function converterOreMinuti (ore) {
@@ -36,8 +34,40 @@ function converterOreMinuti (ore) {
     return oreInMinuti
 }
 
-let OreTrasformateInMinuti = converterOreMinuti(oreAttuali)
+let OreTrasformateInMinuti = converterOreMinuti(oreAttuali) // ore attuali in minuti
 console.log(OreTrasformateInMinuti);
 
-oreAttuali = calcoloMinutiMs(OreTrasformateInMinuti)
+oreAttuali = calcoloMinutiMs(OreTrasformateInMinuti) // ore attuali in ms
 console.log(oreAttuali);
+oreGiornata = calcoloMinutiMs(oreGiornata) // ore di una giornata intera in ms
+
+function minutiAlTermineGiornata(ore , minuti , giornata) {
+    let minutiMancantiGiornata = giornata - (ore + minuti)
+    return minutiMancantiGiornata
+}
+
+let msMancantiGiornata = minutiAlTermineGiornata (oreAttuali , minutiAttuali , oreGiornata) // ms mancanti al termine della giornata
+
+let TempoMancanteDa00Alle9 = converterOreMinuti(9) 
+TempoMancanteDa00Alle9 = calcoloMinutiMs(TempoMancanteDa00Alle9) + calcoloMinutiMs(30) // tempo mancante da 00 alle 9.30 in ms
+console.log(TempoMancanteDa00Alle9);
+let tempoPrimaDellaLezione = msMancantiGiornata + TempoMancanteDa00Alle9 // tempo rimanente in ms
+console.log(tempoPrimaDellaLezione);
+
+function calcoloMsMinuti(ms) {
+    let msMinuti = ms / 60000
+    return msMinuti
+}
+tempoPrimaDellaLezione = calcoloMsMinuti(tempoPrimaDellaLezione) * 60
+console.log(tempoPrimaDellaLezione);
+
+let clock = setInterval(function() {
+    document.querySelector("div").innerHTML = ('Secondi rimanenti alla prossima lezione : ' + tempoPrimaDellaLezione);
+    if (tempoPrimaDellaLezione == 0) {
+        clearInterval(clock);
+        alert('Preparati, inizia la lezione!')
+    } else {
+        tempoPrimaDellaLezione --
+    }
+
+}, 1000)
